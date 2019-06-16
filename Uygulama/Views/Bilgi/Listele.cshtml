@@ -1,0 +1,59 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+@using Uygulama.Models.Entity;
+
+@model List<Kullanici>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Listeleme Ekranı</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+  
+</head>
+<body>
+    <table class="table table-bordered">
+        <tr>
+            <th>Adı</th>
+            <th>Soyadı</th>
+            <th>İli</th>
+            <th>İlçesi</th>
+            <th>Borç durumu</th>
+            <th>Tutar</th>
+            <th>Açıklama</th>
+        </tr>
+
+        @foreach (Kullanici k in Model)
+        {
+            <tr>
+                <td>@k.Ad</td>
+                <td>@k.Soyad</td>
+                <td>@k.Il</td>
+                <td>@k.Ilce</td>
+                @if (k.BorcluMu == true)
+                {
+                    <td>Var</td>
+                }
+                else
+                {
+                    <td>Yok</td>
+                }
+                <td>@k.Tutar</td>
+                <td>@k.Aciklama</td>
+            </tr>
+        }
+        <tr>
+            <td>Toplam Borç:</td>
+            <td>@ViewBag.Borc</td>
+        </tr>
+    </table>
+</body>
+</html>

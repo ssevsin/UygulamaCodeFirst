@@ -1,0 +1,128 @@
+﻿
+@{
+    Layout = null;
+}
+
+@using Uygulama.Models.Entity;
+
+@model Kullanici
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Ekle</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</head>
+<body>
+
+    <form method="POST" action="/Bilgi/Index">
+        <table class="table table-bordered">
+            <tr>
+                <td>
+                    <label>Adı:</label>
+                </td>
+                <td>
+                    <input name="Ad" />
+                </td>
+                <td>@Html.ValidationMessageFor(m => m.Ad, "", new { @class = "text-danger" })</td>  
+            </tr>
+            <tr>
+                <td>
+                    <label>Soyadı:</label>
+                </td>
+                <td>
+                    <input name="Soyad" />
+                </td>
+                <td> @Html.ValidationMessageFor(m => m.Soyad, "", new { @class = "text-danger" })</td>
+            </tr>
+            <tr>
+                <td>
+                    <label>İl:</label>
+                </td>
+                <td>
+                <select id="il-select" name="Il">
+                    <option selected>İl seçiniz</option>
+                   @foreach (var item in ViewBag.IL)
+                   {
+                       <option name="Il" value="@item" slug="@item">@item</option>
+                   }
+                </select>
+            </td>
+                <td> @Html.ValidationMessageFor(m => m.Il, "", new { @class = "text-danger" })</td>
+            </tr>
+            <tr>
+                <td>
+                    <label>İlçe:</label>
+                </td>
+                <td>
+                    <select id="ilce-select" name="Ilce">
+                        <option value="1">İlçe Seçiniz</option>
+                        <option name="Ilce" il-slug="istanbul">Üsküdar</option>
+                        <option name="Ilce" il-slug="istanbul">Kartal</option>
+                        <option name="Ilce" il-slug="istanbul">Beşiktaş</option>
+                        <option name="Ilce" il-slug="adana">Seyhan</option>
+                        <option name="Ilce" il-slug="adana">Ceyhan</option>
+                        <option name="Ilce" il-slug="ankara">Gölbaşı</option>
+                        <option name="Ilce" il-slug="ankara">Kızılcahamam</option>
+                    </select>
+                </td>
+                <td> @Html.ValidationMessageFor(m => m.Ilce, "", new { @class = "text-danger" })</td>
+            </tr>          
+            <tr>
+                <td>
+                    <label>Tutar:</label>
+                </td>
+                <td>
+                    <input type="number" name="Tutar" />
+                </td>
+                <td>@Html.ValidationMessageFor(m => m.Tutar, "", new { @class = "text-danger" })</td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Borçlu mu?</label>
+                </td>
+                <td>
+                    @Html.CheckBoxFor(m => m.BorcluMu, true)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Açıklama:</label>
+                </td>
+                <td>
+                    <input name="Aciklama" />
+                </td>
+                <td> @Html.ValidationMessageFor(m => m.Aciklama, "", new { @class = "text-danger" })</td>            
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit">Kaydet</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+   
+</body>
+</html>
+
+
+
+<script>
+    $(function () {
+        $("#ilce-select option").hide();
+        $("#il-select").change(function () {
+            $("#ilce-select option").hide();
+            var slug = $("#il-select option:selected").attr("slug");
+            if (slug) {
+                $("#ilce-select option[il-slug='" + slug + "']").show();
+            }
+        });
+    });
+</script>
